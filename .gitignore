@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Data Files - Progress and Intermediate
+# Keep only essential CSV files, ignore progress files
+spotify_data_fast_*.csv
+spotify_data_progress_*.csv
+spotify_data_interrupted.csv
+scraper_log_*.log
+lyrics_extraction_*.log
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Large dataset files (uncomment if needed)
+# *.csv
+# *.json
+# *.parquet
+
+# Selenium/Browser
+selenium-*.log
+geckodriver.log
+chromedriver.log
+
+# Project specific
+# Keep main dataset and important files
+# dataset.csv - keep this
+# spotify_songs_dataset.csv - keep this
+# track_ids_and_names.csv - keep this
