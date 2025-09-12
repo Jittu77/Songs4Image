@@ -86,3 +86,20 @@ chromedriver.log
 # dataset.csv - keep this
 # spotify_songs_dataset.csv - keep this
 # track_ids_and_names.csv - keep this
+
+# Web Application specific
+static/uploads/*
+!static/uploads/.gitkeep
+categories_places365.txt
+resnet18_places365.pth.tar
+yolov8n.pt
+
+# ML models and weights
+*.pth
+*.pth.tar
+*.h5
+*.pb
+*.onnx
+
+# Demo files
+demo_main.py
