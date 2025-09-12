@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Music Recommender</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .analysis-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .music-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .platform-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .youtube-header {
+            color: #ff0000;
+        }
+
+        .spotify-header {
+            color: #1db954;
+        }
+
+        .song-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .song-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .song-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .song-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .song-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #ddd;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .song-artist {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .song-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .play-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .download-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .create-video-btn {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .crop-btn {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .analysis-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .analysis-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-display {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .upload-area {
+            border: 3px dashed #1e3c72;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: #f8f9ff;
+            border-color: #2a5298;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e3c72;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .crop-controls {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .crop-controls.show {
+            display: block;
+        }
+
+        .time-input {
+            margin: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 80px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        @media (max-width: 1024px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .song-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .song-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> Advanced AI Music Recommender</h1>
+            <p>Powered by Gemini AI - Upload an image and discover music across platforms</p>
+        </div>
+
+        <form method="POST" action="/analyze" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div style="font-size: 3rem; color: #1e3c72; margin-bottom: 15px;">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div style="font-size: 1.2rem; color: #666; margin-bottom: 10px;">
+                        Drop your image here or click to browse
+                    </div>
+                    <div style="color: #999; font-size: 0.9rem;">
+                        Supports JPG, PNG, GIF up to 10MB
+                    </div>
+                    <input type="file" name="image" id="imageInput" accept="image/*" required>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-robot"></i> Analyze with AI
+                    </button>
+                </div>
+                <div id="imagePreview"></div>
+            </div>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing your image with Gemini AI and finding music across platforms...</p>
+        </div>
+
+        {% if analysis %}
+        <div class="results-container">
+            <div class="analysis-panel">
+                <h2><i class="fas fa-chart-line"></i> AI Analysis Results</h2>
+                
+                <div class="analysis-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Scene Detection</h3>
+                    <p>{{ ', '.join(analysis.scene) }}</p>
+                </div>
+                
+                <div class="analysis-card">
+                    <h3><i class="fas fa-eye"></i> Objects Detected</h3>
+                    <p>{{ ', '.join(analysis.objects) }}</p>
+                </div>
+                
+                <div class="analysis-card">
+                    <h3><i class="fas fa-smile"></i> Mood Analysis</h3>
+                    <p>{{ analysis.mood.title() }}</p>
+                </div>
+                
+                <div class="analysis-card">
+                    <h3><i class="fas fa-palette"></i> Dominant Color</h3>
+                    <div class="color-display" style="background-color: rgb({{ analysis.color[0] }}, {{ analysis.color[1] }}, {{ analysis.color[2] }});"></div>
+                    <span>RGB({{ analysis.color[0] }}, {{ analysis.color[1] }}, {{ analysis.color[2] }})</span>
+                </div>
+                
+                {% if image_filename %}
+                <div class="analysis-card">
+                    <h3><i class="fas fa-image"></i> Uploaded Image</h3>
+                    <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" class="preview-image" alt="Uploaded Image">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="music-panel">
+                {% if youtube_songs %}
+                <div class="platform-section">
+                    <div class="platform-header youtube-header">
+                        <i class="fab fa-youtube" style="font-size: 2rem;"></i>
+                        <h2>YouTube Recommendations</h2>
+                    </div>
+                    <div class="song-grid">
+                        {% for song in youtube_songs %}
+                        <div class="song-card">
+                            <div class="song-content">
+                                <img src="{{ song.thumbnail }}" alt="{{ song.song }}" class="song-thumbnail">
+                                <div class="song-info">
+                                    <div class="song-title">{{ song.song }}</div>
+                                    <div class="song-artist">{{ song.singer }}</div>
+                                    <div style="font-size: 0.8rem; color: #999;">{{ song.duration }}</div>
+                                </div>
+                            </div>
+                            <div class="song-actions">
+                                <button class="action-btn play-btn" onclick="window.open('{{ song.youtube_url }}', '_blank')">
+                                    <i class="fas fa-play"></i> Play
+                                </button>
+                                <button class="action-btn create-video-btn" onclick="createVideo('{{ song.youtube_url }}', '{{ song.song }}', '{{ image_filename }}')">
+                                    <i class="fas fa-video"></i> Create Video
+                                </button>
+                                <button class="action-btn crop-btn" onclick="toggleCropControls('crop-{{ loop.index }}')">
+                                    <i class="fas fa-cut"></i> Crop & Download
+                                </button>
+                            </div>
+                            <div class="crop-controls" id="crop-{{ loop.index }}">
+                                <label>Start Time (seconds):</label>
+                                <input type="number" class="time-input" id="start-{{ loop.index }}" value="0" min="0">
+                                <label>End Time (seconds):</label>
+                                <input type="number" class="time-input" id="end-{{ loop.index }}" value="30" min="1">
+                                <button class="action-btn create-video-btn" onclick="cropAndCreateVideo('{{ song.youtube_url }}', '{{ image_filename }}', {{ loop.index }})">
+                                    <i class="fas fa-download"></i> Download Cropped
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if spotify_songs %}
+                <div class="platform-section">
+                    <div class="platform-header spotify-header">
+                        <i class="fab fa-spotify" style="font-size: 2rem;"></i>
+                        <h2>Spotify Recommendations</h2>
+                    </div>
+                    <div class="song-grid">
+                        {% for song in spotify_songs %}
+                        <div class="song-card">
+                            <div class="song-content">
+                                <img src="{{ song.image }}" alt="{{ song.name }}" class="song-thumbnail">
+                                <div class="song-info">
+                                    <div class="song-title">{{ song.name }}</div>
+                                    <div class="song-artist">{{ song.artist }}</div>
+                                </div>
+                            </div>
+                            <div class="song-actions">
+                                <button class="action-btn play-btn" onclick="window.open('{{ song.url }}', '_blank')">
+                                    <i class="fas fa-play"></i> Open Spotify
+                                </button>
+                                {% if song.preview_url %}
+                                <button class="action-btn download-btn" onclick="playPreview('{{ song.preview_url }}')">
+                                    <i class="fas fa-headphones"></i> Preview
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Modal for progress -->
+    <div id="progressModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Processing...</h3>
+            <div class="spinner"></div>
+            <p id="progressText">Creating your video...</p>
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        const uploadForm = document.getElementById('uploadForm');
+        const loading = document.getElementById('loading');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Click to upload
+        uploadArea.addEventListener('click', (e) => {
+            if (e.target.type !== 'submit') {
+                imageInput.click();
+            }
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                imageInput.files = files;
+                previewImage(files[0]);
+            }
+        });
+
+        // Image preview
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                previewImage(e.target.files[0]);
+            }
+        });
+
+        function previewImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.innerHTML = `<img src="${e.target.result}" class="preview-image" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Form submission with loading
+        uploadForm.addEventListener('submit', () => {
+            loading.classList.add('show');
+        });
+
+        // Video creation functions
+        async function createVideo(youtubeUrl, songName, imageFilename) {
+            showModal('Creating video with full song...');
+            
+            try {
+                const response = await fetch('/api/create-video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        youtube_url: youtubeUrl,
+                        song_name: songName,
+                        image_filename: imageFilename
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateProgress('Video created successfully! Downloading...');
+                    setTimeout(() => {
+                        window.open(result.video_url, '_blank');
+                        closeModal();
+                    }, 1000);
+                } else {
+                    updateProgress('Error: ' + result.error);
+                    setTimeout(closeModal, 2000);
+                }
+            } catch (error) {
+                updateProgress('Error: ' + error.message);
+                setTimeout(closeModal, 2000);
+            }
+        }
+
+        async function cropAndCreateVideo(youtubeUrl, imageFilename, index) {
+            const startTime = document.getElementById(`start-${index}`).value;
+            const endTime = document.getElementById(`end-${index}`).value;
+            
+            if (parseInt(endTime) <= parseInt(startTime)) {
+                alert('End time must be greater than start time');
+                return;
+            }
+
+            showModal('Creating cropped video...');
+            
+            try {
+                const response = await fetch('/api/crop-audio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        youtube_url: youtubeUrl,
+                        start_time: parseInt(startTime),
+                        end_time: parseInt(endTime),
+                        image_filename: imageFilename
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateProgress('Cropped video created! Downloading...');
+                    setTimeout(() => {
+                        window.open(result.video_url, '_blank');
+                        closeModal();
+                    }, 1000);
+                } else {
+                    updateProgress('Error: ' + result.error);
+                    setTimeout(closeModal, 2000);
+                }
+            } catch (error) {
+                updateProgress('Error: ' + error.message);
+                setTimeout(closeModal, 2000);
+            }
+        }
+
+        function toggleCropControls(id) {
+            const controls = document.getElementById(id);
+            controls.classList.toggle('show');
+        }
+
+        function playPreview(previewUrl) {
+            const audio = new Audio(previewUrl);
+            audio.play();
+        }
+
+        function showModal(text) {
+            document.getElementById('progressModal').style.display = 'block';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        function closeModal() {
+            document.getElementById('progressModal').style.display = 'none';
+        }
+
+        function updateProgress(text) {
+            document.getElementById('progressText').textContent = text;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('progressModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
