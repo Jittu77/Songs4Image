@@ -52,7 +52,7 @@ CORS(app)  # Enable CORS for React frontend
 # -----------------------------
 # API Keys Setup
 # -----------------------------
-GEMINI_API_KEY = "AIzaSyAZJZPbnEddSiRCbnzp_DQRFkSDK-GXF6Q"
+GEMINI_API_KEY = "api"
 os.environ['GOOGLE_API_KEY'] = GEMINI_API_KEY
 genai.configure(api_key=GEMINI_API_KEY)
 
@@ -60,8 +60,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 # Spotify Setup
 # -----------------------------
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
-    client_id='1f61472fe65f48a29febcfc9fcbe814d',
-    client_secret='e447472fc69b477da6145176f5ee3e05'
+    client_id='client id',
+    client_secret='client secret'
 ))
 
 # -----------------------------
