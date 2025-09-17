@@ -30,6 +30,18 @@ ENV/
 env/
 .env
 
+# Environment Variables & Credentials
+.env
+.env.local
+.env.production
+.env.development
+*.env
+config.py
+secrets.py
+credentials.json
+*.key
+*.pem
+
 # IDE
 .vscode/
 .idea/

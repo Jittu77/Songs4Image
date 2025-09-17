@@ -116,13 +116,41 @@ pip install flask torch spotipy deepface colorthief ultralytics flask-cors Pillo
 ### Spotify API Setup (Required for Music Recommendations)
 1. Create a Spotify Developer account at https://developer.spotify.com/
 2. Create a new app and get your Client ID and Client Secret
-3. Update the credentials in `main.py`:
-```python
-sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
-    client_id='your_client_id_here',
-    client_secret='your_client_secret_here'
-))
+3. Copy the `.env.example` file to `.env`:
+```bash
+cp .env.example .env
 ```
+4. Update the `.env` file with your actual credentials:
+```bash
+# Edit .env file
+SPOTIFY_CLIENT_ID=your_actual_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_actual_spotify_client_secret
+```
+
+### Gemini AI API Setup (Required for AI-powered recommendations in main1.py)
+1. Get a Gemini API key from Google AI Studio: https://makersuite.google.com/app/apikey
+2. Add your API key to the `.env` file:
+```bash
+# Edit .env file  
+GEMINI_API_KEY=your_actual_gemini_api_key
+```
+
+⚠️ **Security Note**: Never commit your `.env` file to version control. It contains sensitive API credentials.
+
+## 🔒 Security
+
+### Environment Variables
+This application uses environment variables to securely manage API credentials:
+
+- **Configuration File**: Copy `.env.example` to `.env` and add your credentials
+- **Git Ignore**: The `.env` file is automatically ignored by Git to prevent credential exposure
+- **Config Module**: All credentials are loaded through the secure `config.py` module
+
+### Important Security Practices
+- ✅ Never commit `.env` files to version control
+- ✅ Use environment variables for all sensitive data
+- ✅ Regularly rotate API keys and secrets
+- ✅ Limit API key permissions to required scopes only
 
 ### ChromeDriver Setup
 ```bash

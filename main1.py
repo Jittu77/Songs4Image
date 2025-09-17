@@ -15,6 +15,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import urllib
 from typing import List
 import requests
+
+# Import secure configuration
+from config import GEMINI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, FLASK_DEBUG, FLASK_PORT
 try:
     from youtubesearchpython import VideosSearch
 except ImportError:
@@ -52,7 +55,6 @@ CORS(app)  # Enable CORS for React frontend
 # -----------------------------
 # API Keys Setup
 # -----------------------------
-GEMINI_API_KEY = "AIzaSyAZJZPbnEddSiRCbnzp_DQRFkSDK-GXF6Q"
 os.environ['GOOGLE_API_KEY'] = GEMINI_API_KEY
 genai.configure(api_key=GEMINI_API_KEY)
 
@@ -60,8 +62,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 # Spotify Setup
 # -----------------------------
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
-    client_id='1f61472fe65f48a29febcfc9fcbe814d',
-    client_secret='e447472fc69b477da6145176f5ee3e05'
+    client_id=SPOTIFY_CLIENT_ID,
+    client_secret=SPOTIFY_CLIENT_SECRET
 ))
 
 # -----------------------------
@@ -495,4 +497,4 @@ if __name__ == '__main__':
     os.makedirs('static/videos', exist_ok=True)
     os.makedirs('templates', exist_ok=True)
     
-    app.run(debug=True, port=8001)
+    app.run(debug=FLASK_DEBUG, port=8001)

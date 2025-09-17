@@ -11,6 +11,9 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import urllib
 
+# Import secure configuration
+from config import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, FLASK_DEBUG, FLASK_PORT
+
 # -----------------------------
 # Flask App Setup
 # -----------------------------
@@ -21,8 +24,8 @@ CORS(app)  # Enable CORS for React frontend
 # Spotify Setup
 # -----------------------------
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
-    client_id='1f61472fe65f48a29febcfc9fcbe814d',
-    client_secret='e447472fc69b477da6145176f5ee3e05'
+    client_id=SPOTIFY_CLIENT_ID,
+    client_secret=SPOTIFY_CLIENT_SECRET
 ))
 
 # -----------------------------
@@ -182,4 +185,4 @@ def api_analyze():
 # Run App
 # -----------------------------
 if __name__ == '__main__':
-    app.run(debug=True, port = 8000)
+    app.run(debug=FLASK_DEBUG, port=FLASK_PORT)
