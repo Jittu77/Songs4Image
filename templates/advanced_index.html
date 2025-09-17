@@ -568,82 +568,13 @@
             loading.classList.add('show');
         });
 
-        // Video creation functions
-        async function createVideo(youtubeUrl, songName, imageFilename) {
-            showModal('Creating video with full song...');
-            
-            try {
-                const response = await fetch('/api/create-video', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        youtube_url: youtubeUrl,
-                        song_name: songName,
-                        image_filename: imageFilename
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateProgress('Video created successfully! Downloading...');
-                    setTimeout(() => {
-                        window.open(result.video_url, '_blank');
-                        closeModal();
-                    }, 1000);
-                } else {
-                    updateProgress('Error: ' + result.error);
-                    setTimeout(closeModal, 2000);
-                }
-            } catch (error) {
-                updateProgress('Error: ' + error.message);
-                setTimeout(closeModal, 2000);
-            }
+        // Video creation functions - DISABLED (API endpoints removed)
+        function createVideo(youtubeUrl, songName, imageFilename) {
+            alert('Video creation feature is currently disabled.');
         }
 
-        async function cropAndCreateVideo(youtubeUrl, imageFilename, index) {
-            const startTime = document.getElementById(`start-${index}`).value;
-            const endTime = document.getElementById(`end-${index}`).value;
-            
-            if (parseInt(endTime) <= parseInt(startTime)) {
-                alert('End time must be greater than start time');
-                return;
-            }
-
-            showModal('Creating cropped video...');
-            
-            try {
-                const response = await fetch('/api/crop-audio', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        youtube_url: youtubeUrl,
-                        start_time: parseInt(startTime),
-                        end_time: parseInt(endTime),
-                        image_filename: imageFilename
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateProgress('Cropped video created! Downloading...');
-                    setTimeout(() => {
-                        window.open(result.video_url, '_blank');
-                        closeModal();
-                    }, 1000);
-                } else {
-                    updateProgress('Error: ' + result.error);
-                    setTimeout(closeModal, 2000);
-                }
-            } catch (error) {
-                updateProgress('Error: ' + error.message);
-                setTimeout(closeModal, 2000);
-            }
+        function cropAndCreateVideo(youtubeUrl, imageFilename, index) {
+            alert('Video creation feature is currently disabled.');
         }
 
         function toggleCropControls(id) {

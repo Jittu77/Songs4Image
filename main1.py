@@ -387,46 +387,7 @@ def analyze_image():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/create-video', methods=['POST'])
-def create_video_api():
-    """API endpoint to create and download video with image and selected song"""
-    try:
-        data = request.json
-        image_filename = data.get('image_filename')
-        youtube_url = data.get('youtube_url')
-        song_name = data.get('song_name', 'video')
-        
-        if not image_filename or not youtube_url:
-            return jsonify({'error': 'Missing required parameters'}), 400
 
-        image_path = os.path.join('static/uploads', image_filename)
-        if not os.path.exists(image_path):
-            return jsonify({'error': 'Image file not found'}), 404
-
-        # Create temp directory for audio
-        temp_dir = tempfile.mkdtemp()
-        audio_path = os.path.join(temp_dir, 'audio.mp3')
-        
-        # Download audio from YouTube
-        if not download_youtube_audio(youtube_url, audio_path):
-            return jsonify({'error': 'Failed to download audio'}), 500
-
-        # Create output video
-        os.makedirs('static/videos', exist_ok=True)
-        output_filename = f"output_{song_name.replace(' ', '_')}.mp4"
-        output_path = os.path.join('static/videos', output_filename)
-        
-        if create_video_with_music(image_path, audio_path, output_path):
-            return jsonify({
-                'success': True, 
-                'video_url': f'/download-video/{output_filename}',
-                'video_path': output_path
-            })
-        else:
-            return jsonify({'error': 'Failed to create video'}), 500
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 @app.route('/download-video/<filename>')
 def download_video(filename):
@@ -440,51 +401,7 @@ def download_video(filename):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/crop-audio', methods=['POST'])
-def crop_audio():
-    """API endpoint to crop audio and create custom video"""
-    try:
-        data = request.json
-        youtube_url = data.get('youtube_url')
-        start_time = data.get('start_time', 0)
-        end_time = data.get('end_time', 30)
-        image_filename = data.get('image_filename')
-        
-        if not all([youtube_url, image_filename]):
-            return jsonify({'error': 'Missing required parameters'}), 400
 
-        image_path = os.path.join('static/uploads', image_filename)
-        
-        # Create temp directory
-        temp_dir = tempfile.mkdtemp()
-        audio_path = os.path.join(temp_dir, 'audio.mp3')
-        
-        # Download and crop audio
-        if download_youtube_audio(youtube_url, audio_path):
-            # Crop audio using moviepy
-            if MOVIEPY_AVAILABLE:
-                audio_clip = mp.AudioFileClip(audio_path)
-                cropped_audio = audio_clip.subclip(start_time, end_time)
-                
-                cropped_path = os.path.join(temp_dir, 'cropped_audio.mp3')
-                cropped_audio.write_audiofile(cropped_path)
-                
-                # Create video with cropped audio
-                output_filename = f"cropped_video_{start_time}_{end_time}.mp4"
-                output_path = os.path.join('static/videos', output_filename)
-                
-                if create_video_with_music(image_path, cropped_path, output_path, end_time - start_time):
-                    return jsonify({
-                        'success': True,
-                        'video_url': f'/download-video/{output_filename}'
-                    })
-            else:
-                return jsonify({'error': 'MoviePy not available for audio processing'}), 500
-        
-        return jsonify({'error': 'Failed to process audio'}), 500
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 # -----------------------------
 # Run App

@@ -135,48 +135,7 @@ def index():
 
     return render_template('index.html', songs=songs, analysis=analysis_result)
 
-@app.route('/api/analyze', methods=['POST'])
-def api_analyze():
-    """API endpoint for React frontend"""
-    try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'No image file provided'}), 400
-        
-        file = request.files['image']
-        if file.filename == '':
-            return jsonify({'error': 'No file selected'}), 400
 
-        # Create uploads directory if it doesn't exist
-        os.makedirs('static/uploads', exist_ok=True)
-        filepath = os.path.join('static/uploads', file.filename)
-        file.save(filepath)
-
-        # Perform analysis
-        scene = predict_scene(filepath)
-        objects = detect_objects(filepath)
-        mood = analyze_emotion(filepath)
-        color = extract_dominant_color(filepath)
-
-        analysis_result = {
-            'scene': scene,
-            'objects': objects,
-            'mood': mood,
-            'color': color
-        }
-
-        # Get song recommendations
-        query = f"{mood} {' '.join(scene[:1])}"
-        songs = get_song_recommendations(query)
-
-        return jsonify({
-            'success': True,
-            'analysis': analysis_result,
-            'songs': songs,
-            'image_url': f'/static/uploads/{file.filename}'
-        })
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 # -----------------------------
 # Run App
