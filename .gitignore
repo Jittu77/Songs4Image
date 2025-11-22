@@ -49,10 +49,16 @@ logs/
 .pytest_cache/
 
 # Data Files - Progress and Intermediate
-# Keep only essential CSV files, ignore progress files
-spotify_data_fast_*.csv
-spotify_data_progress_*.csv
-spotify_data_interrupted.csv
+# Ignore temporary/progress CSV files, but keep milestone files
+datasets/spotify_data_fast_*.csv
+datasets/spotify_data_progress_*.csv
+datasets/spotify_data_interrupted.csv
+datasets/spotify_data_final.csv
+datasets/spotify_data_error*.csv
+!datasets/spotify_data_fast_9000.csv
+!datasets/spotify_data_progress_175.csv
+datasets/test_result_*.csv
+datasets/failed_tracks.csv
 scraper_log_*.log
 lyrics_extraction_*.log
 
@@ -82,10 +88,12 @@ geckodriver.log
 chromedriver.log
 
 # Project specific
-# Keep main dataset and important files
-# dataset.csv - keep this
-# spotify_songs_dataset.csv - keep this
-# track_ids_and_names.csv - keep this
+# Keep main dataset and important files in datasets/ folder
+# datasets/dataset.csv - keep this
+# datasets/spotify_songs_dataset.csv - keep this
+# datasets/track_ids_and_names.csv - keep this
+# datasets/spotify_data_fast_9000.csv - keep this
+# datasets/spotify_data_progress_175.csv - keep this
 
 # Web Application specific
 static/uploads/*

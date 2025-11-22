@@ -19,7 +19,7 @@ logger = None
 # Enhanced logging setup
 def setup_logging():
     """Setup enhanced logging with file output"""
-    log_filename = f"/workspaces/Songs4Image/scraper_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    log_filename = f"scraper_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     
     logging.basicConfig(
         level=logging.INFO,
@@ -139,7 +139,7 @@ class ProductionSpotifyScraper(SpotifyScraper):
             
             # Progress reporting and saves
             if completed % 25 == 0:  # More frequent saves
-                self.save_progress(f"spotify_data_progress_{completed}.csv")
+                self.save_progress(f"../datasets/spotify_data_progress_{completed}.csv")
                 
                 eta = self.calculate_eta(completed, total_tracks, self.session_start_time)
                 progress_percent = (completed / total_tracks) * 100
@@ -171,12 +171,12 @@ class ProductionSpotifyScraper(SpotifyScraper):
                     base_delay_max = max(2, 5 * 0.8)
         
         # Final save and summary
-        self.save_progress("spotify_data_final.csv")
+        self.save_progress("../datasets/spotify_data_final.csv")
         
         # Save failed tracks for retry
         if self.failed_tracks:
             failed_df = pd.DataFrame(self.failed_tracks)
-            failed_df.to_csv("/workspaces/Songs4Image/failed_tracks.csv", index=False)
+            failed_df.to_csv("../datasets/failed_tracks.csv", index=False)
             logger.info(f"Saved {len(self.failed_tracks)} failed tracks for retry")
         
         # Final statistics
@@ -195,7 +195,7 @@ def main():
     logger = setup_logging()
     
     # Configuration
-    CSV_FILE = "/workspaces/Songs4Image/track_ids_and_names.csv"
+    CSV_FILE = "../datasets/track_ids_and_names.csv"
     START_INDEX = 0  # Change this to resume from a specific point
     TARGET_HOURS = 6  # Target completion time
     
@@ -216,10 +216,10 @@ def main():
         
     except KeyboardInterrupt:
         logger.info("Scraping interrupted by user")
-        scraper.save_progress("spotify_data_interrupted.csv")
+        scraper.save_progress("../datasets/spotify_data_interrupted.csv")
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
-        scraper.save_progress("spotify_data_error.csv")
+        scraper.save_progress("../datasets/spotify_data_error.csv")
     finally:
         scraper.close()
 

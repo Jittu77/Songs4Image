@@ -196,7 +196,7 @@ class SpotifyScraper:
         """Save current progress to CSV"""
         if self.results:
             df = pd.DataFrame(self.results)
-            df.to_csv(f"/workspaces/Songs4Image/{filename}", index=False)
+            df.to_csv(f"../datasets/{filename}", index=False)
             logger.info(f"Progress saved: {len(self.results)} tracks completed")
     
     def scrape_all_tracks(self, csv_file_path, start_index=0, batch_size=50):
@@ -261,7 +261,7 @@ def main():
     
     try:
         # Load the track IDs and names CSV
-        csv_file = "/workspaces/Songs4Image/track_ids_and_names.csv"
+        csv_file = "../datasets/track_ids_and_names.csv"
         
         # You can start from a specific index if resuming
         start_index = 0  # Change this if resuming from a specific point
