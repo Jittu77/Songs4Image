@@ -2,6 +2,9 @@
 
 An intelligent music recommendation system that analyzes images to suggest matching songs. This project combines computer vision, emotion analysis, and music recommendation algorithms to bridge the gap between visual content and auditory experiences. Additionally includes a comprehensive Spotify data scraping toolkit for building music datasets.
 
+<img width="1827" height="1053" alt="image" src="https://github.com/user-attachments/assets/18aebbf1-e161-461a-bf77-1f7bad4cbd64" />
+
+
 ## 🎯 Project Overview
 
 ### 🎵 AI Music Recommendation Web Application
@@ -89,6 +92,20 @@ Songs4Image/
 ├── requirements.txt                 # Python dependencies
 └── .gitignore                      # Git ignore configuration
 ```
+
+## 📁 Project architecture
+
+<img width="1918" height="801" alt="image" src="https://github.com/user-attachments/assets/50f2537a-9853-433f-9751-ffc34882662c" />
+
+
+
+## 📄 Full Project Documentation
+
+A complete end-to-end document covering the project idea, motivation, design decisions, architecture, datasets, ML pipeline, results, and execution steps is available here:
+
+👉 **[View Full Project Document]([./Documentation/Project_Document.pdf](https://docs.google.com/document/d/13CKEDhs1yotBRIFlOVUwydEWVqYSyajPVn_205RiL3s/edit?usp=sharing))**  
+
+
 
 ### Important Notes About the New Structure:
 - **Scraper Scripts**: All scraper scripts should be run from within the `scrapper/` directory:
