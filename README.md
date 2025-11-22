@@ -103,7 +103,7 @@ Songs4Image/
 
 A complete end-to-end document covering the project idea, motivation, design decisions, architecture, datasets, ML pipeline, results, and execution steps is available here:
 
-👉 **[View Full Project Document]([./Documentation/Project_Document.pdf](https://docs.google.com/document/d/13CKEDhs1yotBRIFlOVUwydEWVqYSyajPVn_205RiL3s/edit?usp=sharing))**  
+👉 **[View Full Project Document](https://docs.google.com/document/d/13CKEDhs1yotBRIFlOVUwydEWVqYSyajPVn_205RiL3s/edit?usp=sharing)**  
 
 
 
