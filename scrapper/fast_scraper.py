@@ -126,7 +126,7 @@ class FastSpotifyScraper:
         """Save progress to CSV"""
         if self.results:
             df = pd.DataFrame(self.results)
-            df.to_csv(f"/workspaces/Songs4Image/datasets/{filename}", index=False)
+            df.to_csv(f"../datasets/{filename}", index=False)
     
     def fast_scrape(self, csv_file_path, start_index=0):
         """SPEED-OPTIMIZED scraping"""
@@ -194,7 +194,7 @@ class FastSpotifyScraper:
 
 def main():
     """Main execution function"""
-    CSV_FILE = "/workspaces/Songs4Image/datasets/track_ids_and_names.csv"
+    CSV_FILE = "../datasets/track_ids_and_names.csv"
     
     # Start from track 175 since previous scraper completed that many
     start_index = 175
