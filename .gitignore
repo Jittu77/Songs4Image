@@ -49,10 +49,14 @@ logs/
 .pytest_cache/
 
 # Data Files - Progress and Intermediate
-# Keep only essential CSV files, ignore progress files
+# Ignore temporary/progress CSV files, but keep milestone files
 datasets/spotify_data_fast_*.csv
 datasets/spotify_data_progress_*.csv
 datasets/spotify_data_interrupted.csv
+datasets/spotify_data_final.csv
+datasets/spotify_data_error*.csv
+!datasets/spotify_data_fast_9000.csv
+!datasets/spotify_data_progress_175.csv
 datasets/test_result_*.csv
 datasets/failed_tracks.csv
 scraper_log_*.log
