@@ -90,6 +90,20 @@ Songs4Image/
 └── .gitignore                      # Git ignore configuration
 ```
 
+### Important Notes About the New Structure:
+- **Scraper Scripts**: All scraper scripts should be run from within the `scrapper/` directory:
+  ```bash
+  cd scrapper
+  python fast_scraper.py
+  ```
+- **CSV Datasets**: All CSV files are now in the `datasets/` folder. The scraper scripts have been updated to use relative paths (`../datasets/`)
+- **Jupyter Notebooks**: When using the Jupyter notebooks (ML_Analysis.ipynb, project_report.ipynb), update any hardcoded CSV file paths to reference the `datasets/` folder:
+  ```python
+  # Old: df = pd.read_csv("file.csv")
+  # New: df = pd.read_csv("datasets/file.csv")
+  ```
+- **Main Application**: The main Flask application (`main.py`) should be run from the root directory
+
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
