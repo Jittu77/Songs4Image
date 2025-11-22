@@ -1,11 +1,15 @@
 # Spotify Scraper Usage Guide
 
-## Files Created:
+## Files Location:
 
-1. **spotify_scraper.py** - Main scraper class with anti-detection measures
-2. **production_scraper.py** - Optimized for 10,000 songs in 5-6 hours
-3. **test_scraper.py** - Test script for verification
-4. **requirements.txt** - Required Python packages
+All scraper files are located in the `scrapper/` directory:
+
+1. **scrapper/spotify_scraper.py** - Main scraper class with anti-detection measures
+2. **scrapper/production_scraper.py** - Optimized for 10,000 songs in 5-6 hours
+3. **scrapper/fast_scraper.py** - Speed-optimized scraper (2-3 seconds per track)
+4. **scrapper/lyrics_extractor.py** - Specialized lyrics extraction tool
+5. **scrapper/test_scraper.py** - Test script for verification
+6. **requirements.txt** - Required Python packages (in root directory)
 
 ## Setup Instructions:
 
@@ -27,13 +31,21 @@
 
 ### Test Run (Recommended First):
 ```bash
+cd scrapper
 python test_scraper.py
 ```
 This will test the first 5 tracks to ensure everything works.
 
 ### Production Run:
 ```bash
+cd scrapper
 python production_scraper.py
+```
+
+### Fast Scraper (Speed-Optimized):
+```bash
+cd scrapper
+python fast_scraper.py
 ```
 
 ## Features:
@@ -58,16 +70,17 @@ python production_scraper.py
 - Automatic pace adjustment if behind schedule
 
 ### Output Files:
-- **spotify_data_progress_X.csv** - Periodic progress saves
-- **spotify_data_final.csv** - Final complete dataset
-- **failed_tracks.csv** - Tracks that failed after retries
-- **scraper_log_TIMESTAMP.log** - Detailed execution log
+All output files are saved in the `datasets/` directory:
+- **datasets/spotify_data_progress_X.csv** - Periodic progress saves
+- **datasets/spotify_data_final.csv** - Final complete dataset
+- **datasets/failed_tracks.csv** - Tracks that failed after retries
+- **scraper_log_TIMESTAMP.log** - Detailed execution log (saved in scrapper directory)
 
 ### Resume Capability:
 If the scraper stops, you can resume by:
-1. Opening `production_scraper.py`
+1. Opening `scrapper/production_scraper.py`
 2. Changing `START_INDEX` to the last completed track number
-3. Running the script again
+3. Running the script again from the scrapper directory
 
 ## Expected Output Format:
 
