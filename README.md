@@ -60,27 +60,28 @@ Successfully scraped **10,000 Spotify tracks** with comprehensive data extractio
 ```
 Songs4Image/
 ├── 🎵 Web Application/
-│   ├── main.py                      # Flask app with image analysis & music recommendation
-│   ├── main1.py                     # Enhanced version with Gemini AI integration
+│   ├── main.py                      # Flask app with image analysis & music recommendation (formerly main1.py)
 │   ├── templates/
 │   │   ├── index.html               # Modern web interface with image upload
 │   │   └── advanced_index.html      # Advanced template variant
 │   └── static/
 │       ├── uploads/                 # User uploaded images storage
 │       └── *.jpg, *.jpeg            # Sample/test images
-├── 📊 Data Scraping Tools/
+├── 📊 scrapper/                     # Data Scraping Tools
 │   ├── fast_scraper.py              # Speed-optimized scraper (primary)
 │   ├── production_scraper.py        # Detailed scraper with full logging
 │   ├── spotify_scraper.py           # Base scraper class
-│   └── lyrics_extractor.py          # Specialized lyrics extraction
-├── 🔧 Utilities/
-│   ├── keep_alive.py                # Codespace timeout prevention
+│   ├── lyrics_extractor.py          # Specialized lyrics extraction
 │   └── test_scraper.py              # Testing and validation
-├── 📁 Data & Analysis/
+├── 📁 datasets/                     # Data & Analysis
 │   ├── track_ids_and_names.csv      # Input dataset (10K tracks)
 │   ├── spotify_songs_dataset.csv    # Source dataset
 │   ├── spotify_data_progress_175.csv # Milestone: First 175 tracks
 │   ├── spotify_data_fast_9000.csv   # Milestone: 9K tracks completed
+│   └── dataset.csv                  # Original dataset
+├── 🔧 Utilities/
+│   └── keep_alive.py                # Codespace timeout prevention
+├── 📓 Analysis Notebooks/
 │   ├── ML_Analysis.ipynb            # Machine learning analysis and clustering
 │   └── project_report.ipynb         # Comprehensive project documentation
 ├── 📚 Documentation/
@@ -145,17 +146,10 @@ wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE
 # Activate virtual environment
 source .venv/bin/activate
 
-# Run the web application
+# Run the web application (enhanced version with Gemini AI integration)
 python main.py
 ```
-The application will be available at `http://localhost:8000`
-
-#### Enhanced Version with Gemini AI
-```bash
-# Run the enhanced version with AI-powered recommendations
-python main1.py
-```
-Available at `http://localhost:8001`
+The application will be available at `http://localhost:8001`
 
 #### Features:
 - **Web Interface**: Upload images via drag-and-drop or file browser
@@ -176,18 +170,21 @@ curl -X POST -F "image=@your_image.jpg" http://localhost:8000/api/analyze
 source .venv/bin/activate
 
 # Run the optimized fast scraper
+cd scrapper
 python fast_scraper.py
 ```
 
 ### Production Scraper (Detailed)
 ```bash
 # For comprehensive logging and detailed extraction
+cd scrapper
 python production_scraper.py
 ```
 
 ### Lyrics Extraction
 ```bash
 # Add lyrics to existing CSV files
+cd scrapper
 python lyrics_extractor.py
 ```
 
@@ -234,7 +231,7 @@ python keep_alive.py
 ## 📈 Data Output
 
 ### CSV Structure
-Each output file contains:
+All datasets are stored in the `datasets/` folder. Each output file contains:
 ```csv
 track_id,track_name,spotify_url,cover_image,lyrics,processing_time
 1J2tfINpEHRhCP8CUS15lE,The Message,https://open.spotify.com/track/1J2tfINpEHRhCP8CUS15lE,https://i.scdn.co/image/...,Some people live for the fortune...,3.05
@@ -264,8 +261,12 @@ track_id,track_name,spotify_url,cover_image,lyrics,processing_time
 - **Format**: Clean track IDs (removed "spotify:track:" prefix)
 
 ### Output Datasets
+All datasets are stored in the `datasets/` folder:
+- **track_ids_and_names.csv**: Input dataset with 10,000 track IDs
 - **spotify_data_progress_175.csv**: First 175 tracks (detailed)
 - **spotify_data_fast_9000.csv**: 9,000 tracks (fast scraper)
+- **spotify_songs_dataset.csv**: Source dataset
+- **dataset.csv**: Original dataset
 - **Final output**: Complete 10,000 track dataset
 
 ## ⚙️ Configuration

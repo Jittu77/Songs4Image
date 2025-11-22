@@ -16,7 +16,7 @@ def test_scraper():
     
     # Load the track data
     try:
-        df = pd.read_csv("/workspaces/Songs4Image/track_ids_and_names.csv")
+        df = pd.read_csv("../datasets/track_ids_and_names.csv")
         logger.info(f"Loaded {len(df)} tracks from CSV")
         
         # Test with first 5 tracks
@@ -43,7 +43,7 @@ def test_scraper():
             
             # Save individual result for verification
             test_df = pd.DataFrame([result])
-            test_df.to_csv(f"/workspaces/Songs4Image/test_result_{index}.csv", index=False)
+            test_df.to_csv(f"../datasets/test_result_{index}.csv", index=False)
         
         scraper.close()
         logger.info("Test completed successfully!")

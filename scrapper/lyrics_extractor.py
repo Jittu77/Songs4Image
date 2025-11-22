@@ -214,7 +214,7 @@ def main():
     import glob
     
     # Find the latest fast scraper file
-    fast_files = glob.glob("/workspaces/Songs4Image/spotify_data_fast_*.csv")
+    fast_files = glob.glob("../datasets/spotify_data_fast_*.csv")
     if not fast_files:
         print("❌ No fast scraper files found!")
         return

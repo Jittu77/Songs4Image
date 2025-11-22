@@ -22,7 +22,7 @@ def check_scraper_status():
 def get_latest_progress_file():
     """Get the latest progress file to show current status"""
     try:
-        files = [f for f in os.listdir('.') if f.startswith('spotify_data_fast_') and f.endswith('.csv')]
+        files = [f for f in os.listdir('datasets') if f.startswith('spotify_data_fast_') and f.endswith('.csv')]
         if files:
             # Sort by the number in filename to get latest
             numbers = []
@@ -37,7 +37,7 @@ def get_latest_progress_file():
                 return numbers[0]
         
         # Also check old progress files
-        old_files = [f for f in os.listdir('.') if f.startswith('spotify_data_progress_') and f.endswith('.csv')]
+        old_files = [f for f in os.listdir('datasets') if f.startswith('spotify_data_progress_') and f.endswith('.csv')]
         if old_files:
             numbers = []
             for f in old_files:
@@ -85,7 +85,7 @@ def main():
             # If scraper stops, give a warning
             if not scraper_running:
                 print("⚠️  WARNING: Fast scraper is not running!")
-                print("   You may need to restart it: source .venv/bin/activate && python fast_scraper.py")
+                print("   You may need to restart it: source .venv/bin/activate && python scrapper/fast_scraper.py")
             
             # Wait 2 minutes before next check (keeps activity frequent enough)
             time.sleep(120)
